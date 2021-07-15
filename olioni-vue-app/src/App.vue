@@ -4,6 +4,7 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import {questions} from '@/components/data.js'
 
 export default {
   name: 'App',
@@ -16,8 +17,6 @@ export default {
 <style>
 * {
   margin: 0;
-  width: 100vw;
-  height: 100vh;
 }
 
 #app {
