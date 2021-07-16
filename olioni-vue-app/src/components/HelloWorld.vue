@@ -7,9 +7,10 @@
     </div>
     <div id="bottomBox">
 
-      <div id="testButtons">
-        <button @click="decreaseIndex()"><h3>Decrease</h3></button>
-        <button @click="increaseIndex()"><h3>Increase</h3></button>
+      <div class="checkBoxDiv" :key="question" v-for="(response, question) in responses">
+        <div class="checkBox" @click="setSelected()" v-for="questionReplys in reponse" :key="questionReplys">
+          <h3 class="checkBoxText"> {{ questionReplys }}</h3>
+        </div>
       </div>
 
     </div>
@@ -19,6 +20,7 @@
 <script>
 import {questionsObj} from '@/components/data.js'
 import {questions} from '@/components/data.js'
+import {responses} from '@/components/data.js'
 
 export default {
   name: 'HelloWorld',
@@ -27,6 +29,8 @@ export default {
     return {
       questionsObj: questionsObj,
       questions: questions,
+      responses: responses,
+
       questionIndex: 'question1',
       index: 0
     }
@@ -78,6 +82,12 @@ export default {
 #bottomBox {
   height: 75vh;
   width: 100vw;
+
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 h3 {
@@ -103,5 +113,39 @@ h3 {
   align-items: center;
 
   border-radius: 15px;
+}
+
+.checkBoxDiv {
+  width: 12vw;
+  height: 12vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkBox {
+  background-color: white;
+  
+  color: black;
+
+  width: 10vw;
+  height: 10vh;
+
+  border-radius: 15px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: 0.3s;
+}
+
+.checkBox:hover {
+  cursor: pointer;
+}
+
+.checkBoxText {
+  color: black;
 }
 </style>
