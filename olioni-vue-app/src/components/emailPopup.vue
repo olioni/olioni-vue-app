@@ -1,0 +1,120 @@
+<template>
+    <div class="container">
+        <div v-if="confirmed" class="tyWrap">
+            <h2 class="tyText">Thank you for your input 👍</h2>
+        </div>
+        <div v-if="confirming" class="inputsWrap">
+            <div class="inputContainer">
+                <h2 class="inputHeader">PARENT EMAIL ADRRESS</h2>
+                <input>
+            </div>
+            <div class="inputContainer">
+                <h2 class="inputHeader">TEACHER EMAIL ADRRESS</h2>
+                <input>
+            </div>
+        </div>
+        <div v-if="confirming" class="buttonWrap">
+            <button class="confirmButton" @click="confirmEmails()">CONFIRM</button>
+        </div>
+    </div>
+</template>
+
+<script>
+export default ({
+    name: 'emailPopup',
+    props: [],
+    data() {
+        return {
+            confirming: true,
+            confirmed: false
+        }
+    },
+    methods: {
+        confirmEmails() {
+            this.confirming = false
+            this.confirmed = true
+        }
+    }
+})
+</script>
+
+<style scoped>
+
+* {
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    position: absolute;
+
+    width: 100vw;
+    height: 100vh;
+
+    justify-content: center;
+    align-items: center;
+
+    background-color: #1e6ae3;
+
+    flex-direction: column;
+}
+
+.inputsWrap {
+    width: 100vw;
+    height: 50vh;
+}
+
+.inputContainer {
+    height: 20vh;
+}
+
+.inputHeader {
+    margin-bottom: 2vh;
+    color: black;
+}
+
+.confirmButton {
+  width: 80vw;
+  height: 10vh;
+  
+  background-color: white;
+
+  border: none;
+  border-radius: 10px;
+  
+  transition: 0.3s;
+}
+
+.confirmButton:hover {
+  cursor: pointer;
+  font-size: 20px;
+
+  background-color: rgb(238, 238, 238);
+}
+
+input {
+    width: 60vw;
+    height: 6vh;
+
+    border: none;
+
+    border-radius: 5px;
+
+    font-size: 18px;
+
+    text-align: center;
+}
+
+.tyWrap {
+    width: 100vw;
+    height: 100vh;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+
+    font-size: 25px;
+}
+</style>

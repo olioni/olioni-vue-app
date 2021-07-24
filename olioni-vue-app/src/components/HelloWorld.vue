@@ -1,16 +1,23 @@
 <template>
   <div id="main">
     <div id="topBox">
-      <div class="questionWrap" v-for="(question, index) in questionsObj" :key="question">
-        <div class="questionBox" v-if="index === questionIndex"  :id="index"> {{ question }} </div>
+      <div class="questionWrap" v-for="(question, index) in qObj" :key="question">
+        <div class="questionBox" v-if="index === qIndex"  :id="index"><strong> {{ question }} </strong></div>
       </div>
     </div>
     <div id="bottomBox">
 
-      <div class="checkBoxDiv" :key="question" v-for="(response, question) in responses">
-        <div class="checkBox" @click="setSelected()" v-for="questionReplys in reponse" :key="questionReplys">
-          <h3 class="checkBoxText"> {{ questionReplys }}</h3>
+      <div class="responseWrap" v-for="(reply, index) in qResponses" :key="index">
+        <div class="responseContainer" v-if="index === qIndex" :id="index">
+          <div class="response" :key="index" v-for="(items, index) in reply" :id="index" @click="highlightRespo(index, reply)">
+            {{ items }}
+          </div>
         </div>
+      </div>
+
+      <div class="submitWrap">
+        <button class="submitButton" @click="nextQuestion()" v-if="submit">SUBMIT</button>
+        <button class="submitButton" @click="displayEmailPopup()" v-if="finish">FINISH</button>
       </div>
 
     </div>
@@ -18,31 +25,43 @@
 </template>
 
 <script>
-import {questionsObj} from '@/components/data.js'
-import {questions} from '@/components/data.js'
-import {responses} from '@/components/data.js'
-
 export default {
   name: 'HelloWorld',
   props: [],
   data() {
     return {
-      questionsObj: questionsObj,
-      questions: questions,
-      responses: responses,
+      qObj: {q1: 'What happened?', q2: 'What did you want to happen? OR Think was going to happen?', q3: 'Who has been affected or hurt and how?', q4: 'What needs to happen to fix things up?', q5: 'Next time?'},
+      questionArr: ['What happened?', 'What did you want to happen? OR Think was going to happen?', 'Who has been affected or hurt and how?', 'What needs to happen to fix things up?', 'What will you do next time?'],
+      qResponses: {q1: ['Pushed', 'Hit', 'Kicked', 'Took Something', 'Bad/Nasty Words', 'Spat', 'Ignored', 'Upset Someone', 'Ran Away', 'Broke', 'Scratched', 'Made a Mess'], q2:['INSERT QUESTION 2 ARR']},
+      qIndex: 'q1',
 
-      questionIndex: 'question1',
-      index: 0
+      selectedResponses: [],
+
+      qInt: 1,
+
+      buttonText: 'SUBMIT',
+      submit: true,
+      finish: false
     }
   },
   methods: {
-    increaseIndex() {
-      this.index++
-      this.questionIndex = this.questions[this.index]
+    displayEmailPopup() {
+      this.$emit('showPopup')
     },
-    decreaseIndex() {
-      this.index--
-      this.questionIndex = this.questions[this.index]
+    nextQuestion() {
+      this.qInt++
+      this.qIndex = 'q' + this.qInt
+
+      if (this.qIndex == 'q5') {
+        this.submit = false
+        this.finish = true
+      }
+
+    },
+    highlightRespo(id, reply) {
+      document.getElementById(id).style = "background-color: #02d614; color: white;"
+      this.selectedResponses.push(this.qResponses[this.qIndex][id])
+      console.log(this.selectedResponses)
     }
   },
   mounted() {
@@ -71,7 +90,7 @@ export default {
 }
 
 #topBox {
-  height: 25vh;
+  height: 22vh;
   width: 100vw;
 
   display: flex;
@@ -80,12 +99,12 @@ export default {
 }
 
 #bottomBox {
-  height: 75vh;
+  height: 70vh;
   width: 100vw;
 
   display: flex;
   justify-content: center;
-  /* align-items: center; */
+  align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
 }
@@ -115,37 +134,63 @@ h3 {
   border-radius: 15px;
 }
 
-.checkBoxDiv {
-  width: 12vw;
-  height: 12vh;
-
+.responseWrap {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.checkBox {
+.responseContainer {
+  width: 100%;
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  flex-wrap: wrap;  
+}
+
+.response {
   background-color: white;
   
-  color: black;
+  width: 15vw;
+  height: 25vh;
 
-  width: 10vw;
-  height: 10vh;
-
-  border-radius: 15px;
+  border-radius: 10px;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
   transition: 0.3s;
+
+  margin-top: 4px;
+  margin-right: 4px;
+  margin-left: 4px;
+  margin-bottom: 4px;
 }
 
-.checkBox:hover {
+.response:hover{
   cursor: pointer;
+  font-size: 18px;
 }
 
-.checkBoxText {
-  color: black;
+.submitButton {
+  width: 80vw;
+  height: 10vh;
+  
+  background-color: white;
+
+  border: none;
+  border-radius: 10px;
+  
+  transition: 0.3s;
+}
+
+.submitButton:hover {
+  cursor: pointer;
+  font-size: 20px;
+
+  background-color: rgb(238, 238, 238);
 }
 </style>

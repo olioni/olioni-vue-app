@@ -1,15 +1,27 @@
 <template>
-  <HelloWorld/>
+  <emailPopup v-if="popup"/>
+  <HelloWorld @showPopup="showPopup" />
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import {questions} from '@/components/data.js'
+import emailPopup from './components/emailPopup.vue'
 
 export default {
   name: 'App',
+  data() {
+    return {
+      popup: false
+    }
+  },
   components: {
-    HelloWorld
+    HelloWorld,
+    emailPopup
+  },
+  methods: {
+    showPopup() {
+      this.popup = true
+    }
   }
 }
 </script>
