@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" :style="{backgroundColor: bgClr}">
         <div v-if="confirmed" class="tyWrap">
             <h2 class="tyText">Thank you for your input 👍</h2>
         </div>
@@ -14,7 +14,7 @@
             </div>
         </div>
         <div v-if="confirming" class="buttonWrap">
-            <button class="confirmButton" @click="confirmEmails()">CONFIRM</button>
+            <button class="confirmButton" @click="confirmEmails(), rng()">CONFIRM</button>
         </div>
     </div>
 </template>
@@ -26,13 +26,18 @@ export default ({
     data() {
         return {
             confirming: true,
-            confirmed: false
+            confirmed: false,
+
+            bgClr: '#7c4ebf'
         }
     },
     methods: {
         confirmEmails() {
             this.confirming = false
             this.confirmed = true
+        },
+        rng() {
+            this.bgClr = '#5bc7ac'
         }
     }
 })
@@ -57,11 +62,15 @@ export default ({
     background-color: #1e6ae3;
 
     flex-direction: column;
+
+    transition: 0.6s;
 }
 
 .inputsWrap {
     width: 100vw;
     height: 50vh;
+
+    transition: 0.6s;
 }
 
 .inputContainer {
@@ -116,5 +125,7 @@ input {
     color: white;
 
     font-size: 25px;
+
+    transition: 0.6s;
 }
 </style>

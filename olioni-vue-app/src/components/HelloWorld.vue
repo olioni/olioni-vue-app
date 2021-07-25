@@ -1,5 +1,5 @@
 <template>
-  <div id="main">
+  <div id="main" :style="{backgroundColor: bgClr}">
     <div id="topBox">
       <div class="questionWrap" v-for="(question, index) in qObj" :key="question">
         <div class="questionBox" v-if="index === qIndex"  :id="index"><strong> {{ question }} </strong></div>
@@ -16,7 +16,7 @@
       </div>
 
       <div class="submitWrap">
-        <button class="submitButton" @click="nextQuestion()" v-if="submit">SUBMIT</button>
+        <button class="submitButton" @click="nextQuestion(), changeBgColor()" v-if="submit">SUBMIT</button>
         <button class="submitButton" @click="displayEmailPopup()" v-if="finish">FINISH</button>
       </div>
 
@@ -30,9 +30,8 @@ export default {
   props: [],
   data() {
     return {
-      qObj: {q1: 'What happened?', q2: 'What did you want to happen? OR Think was going to happen?', q3: 'Who has been affected or hurt and how?', q4: 'What needs to happen to fix things up?', q5: 'Next time?'},
-      questionArr: ['What happened?', 'What did you want to happen? OR Think was going to happen?', 'Who has been affected or hurt and how?', 'What needs to happen to fix things up?', 'What will you do next time?'],
-      qResponses: {q1: ['Pushed', 'Hit', 'Kicked', 'Took Something', 'Bad/Nasty Words', 'Spat', 'Ignored', 'Upset Someone', 'Ran Away', 'Broke', 'Scratched', 'Made a Mess'], q2:['INSERT QUESTION 2 ARR']},
+      qObj: {q1: 'What happened?', q2: 'What did you want to happen? OR Think was going to happen?', q3: 'Who has been affected or hurt?', q4: 'How?', q5: 'What needs to happen to fix things up?', q6: 'Next time?'},
+      qResponses: {q1: ['Pushed', 'Hit', 'Kicked', 'Took Something', 'Bad/Nasty Words', 'Spat', 'Ignored', 'Upset Someone', 'Ran Away', 'Broke', 'Scratched', 'Made a Mess'], q2:['Angry', 'Go Away', 'Frustrated', "Don't Like/Don't Want To", 'Confused', 'Want To Play', 'Worried', 'Want To Go Home', 'Stop', 'Need Help', 'Not Fair'], q3: ['Student/Child', 'Teacher', 'School Helper', 'Teacher Aide', 'Whole Class', 'Grandparents', 'Bus Driver', 'Mum/Dad', 'Principal/DP'], q4: ['Hurt Head/Face', 'Hurt Arm', 'Hurt Leg', 'Broke Something', 'Made a Mess', 'Hurt Ears', 'Made Someone Scared', 'Made Someone Cry', 'Made Someone Embarassed', 'Made Someone Worried', "Hurt Someone's Feelings", 'Made Someone Sad'], q5: ['Give/Give Back', 'Say Something Nice', 'Check If Ok', 'Fix', 'Offer To', 'Help', 'Clean Up', 'Say I Will',]},
       qIndex: 'q1',
 
       selectedResponses: [],
@@ -41,10 +40,18 @@ export default {
 
       buttonText: 'SUBMIT',
       submit: true,
-      finish: false
+      finish: false,
+
+      colorArr: ['#8f02e0', '#e0025f', '#37db81', '#e37100', '#ad0c0c'],
+      bgClr: '#1e6ae3'
     }
   },
   methods: {
+    changeBgColor() {
+      let rng = Math.floor(Math.random() * this.colorArr.length)
+      this.bgClr = this.colorArr[rng]
+      this.colorArr.splice(rng, 1)
+    },
     displayEmailPopup() {
       this.$emit('showPopup')
     },
@@ -62,7 +69,7 @@ export default {
       document.getElementById(id).style = "background-color: #02d614; color: white;"
       this.selectedResponses.push(this.qResponses[this.qIndex][id])
       console.log(this.selectedResponses)
-    }
+    },
   },
   mounted() {
     
@@ -87,6 +94,8 @@ export default {
   align-items: center;
 
   flex-direction: column;
+
+  transition: 0.6s;
 }
 
 #topBox {

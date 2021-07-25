@@ -11,7 +11,10 @@ export default {
   name: 'App',
   data() {
     return {
-      popup: false
+      popup: false,
+
+      colorArr: ['#66b031', '#3162b0'],
+      bgColor: ''
     }
   },
   components: {
@@ -21,6 +24,10 @@ export default {
   methods: {
     showPopup() {
       this.popup = true
+
+      let rng = Math.floor(Math.random() * this.colorArr.length)
+      this.bgColor = this.colorArr[rng]
+      this.colorArr.splice(rng, 1)
     }
   }
 }
