@@ -1,33 +1,36 @@
 <template>
   <emailPopup v-if="popup"/>
-  <HelloWorld @showPopup="showPopup" />
+  <HelloWorld @showPopup="showPopup" v-if="start" />
+  <startPopup v-if="open" @showApp="showApp"/>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
 import emailPopup from './components/emailPopup.vue'
+import startPopup from './components/startPopup.vue'
 
 export default {
   name: 'App',
   data() {
     return {
       popup: false,
-
-      colorArr: ['#66b031', '#3162b0'],
-      bgColor: ''
+      start: false,
+      open: true
     }
   },
   components: {
     HelloWorld,
-    emailPopup
+    emailPopup,
+    startPopup
   },
   methods: {
     showPopup() {
       this.popup = true
-
-      let rng = Math.floor(Math.random() * this.colorArr.length)
-      this.bgColor = this.colorArr[rng]
-      this.colorArr.splice(rng, 1)
+      this.start = false
+    },
+    showApp() {
+      this.open = false
+      this.start = true
     }
   }
 }

@@ -2,7 +2,7 @@
   <div id="main" :style="{backgroundColor: bgClr}">
     <div id="topBox">
       <div class="questionWrap" v-for="(question, index) in qObj" :key="question">
-        <div class="questionBox" v-if="index === qIndex"  :id="index"><strong> {{ question }} </strong></div>
+        <div class="questionBox" v-if="index === qIndex"  :id="index"><strong> {{ question.toUpperCase() }} </strong></div>
       </div>
     </div>
     <div id="bottomBox">
@@ -141,6 +141,9 @@ h3 {
   align-items: center;
 
   border-radius: 15px;
+
+  font-size: 18px;
+  color: black;
 }
 
 .responseWrap {

@@ -1,7 +1,7 @@
 <template>
     <div class="container" :style="{backgroundColor: bgClr}">
         <div v-if="confirmed" class="tyWrap">
-            <h2 class="tyText">Thank you for your input 👍</h2>
+            <h2 class="tyText" @mouseover="hover()" @mouseout="unhover()"> {{ tyText }} </h2>
         </div>
         <div v-if="confirming" class="inputsWrap">
             <div class="inputContainer">
@@ -28,7 +28,8 @@ export default ({
             confirming: true,
             confirmed: false,
 
-            bgClr: '#7c4ebf'
+            bgClr: '#7c4ebf',
+            tyText: 'Thank you for your input 👍'
         }
     },
     methods: {
@@ -38,6 +39,12 @@ export default ({
         },
         rng() {
             this.bgClr = '#5bc7ac'
+        },
+        hover() {
+            this.tyText = '✨ Thank you for your input ✨'
+        },
+        unhover() {
+            this.tyText = 'Thank you for your input 👍'
         }
     }
 })
@@ -127,5 +134,9 @@ input {
     font-size: 25px;
 
     transition: 0.6s;
+}
+
+.tyText {
+    transition: 0.3s;
 }
 </style>
