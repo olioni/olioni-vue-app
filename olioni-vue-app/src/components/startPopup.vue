@@ -59,4 +59,39 @@ export default {
     transform: translateY(4px);
     box-shadow: 0 12px rgb(197, 197, 197);
 }
+
+@media only screen and (max-width: 600px) {
+    .circle {
+        width: 90vw;
+        height: 55vh;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .circle {
+        width: 90vw;
+        height: 45vh;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .circle {
+        width: 90vw;
+        height: 40vh;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    .circle {
+        height: 25vh;
+    }
+}
+/* 
+@media only screen and (max-width: 700px) {
+    .circle {
+        width: 82vw;
+        height: 70vh;
+    }
+} */
+
 </style>
