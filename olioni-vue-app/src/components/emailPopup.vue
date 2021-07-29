@@ -1,25 +1,30 @@
 <template>
     <div class="container" :style="{backgroundColor: bgClr}">
-        <div v-if="confirmed" class="tyWrap">
-            <h2 class="tyText" @mouseover="hover()" @mouseout="unhover()"> {{ tyText }} </h2>
-        </div>
-        <div v-if="confirming" class="inputsWrap">
-            <div class="inputContainer">
-                <h2 class="inputHeader">PARENT EMAIL ADRRESS</h2>
-                <input>
+        <form @submit.prevent="submitEmail()">
+            <div v-if="confirmed" class="tyWrap">
+                <h2 class="tyText" @mouseover="hover()" @mouseout="unhover()"> {{ tyText }} </h2>
             </div>
-            <div class="inputContainer">
-                <h2 class="inputHeader">TEACHER EMAIL ADRRESS</h2>
-                <input>
+            <div v-if="confirming" class="inputsWrap">
+                <div class="inputContainer">
+                    <h2 class="inputHeader">PARENT EMAIL ADRRESS</h2>
+                    <input>
+                </div>
+                <div class="inputContainer">
+                    <h2 class="inputHeader">TEACHER EMAIL ADRRESS</h2>
+                    <input>
+                </div>
             </div>
-        </div>
-        <div v-if="confirming" class="buttonWrap">
-            <button class="confirmButton" @click="confirmEmails(), rng()">CONFIRM</button>
-        </div>
+            <div v-if="confirming" class="buttonWrap">
+                <button class="confirmButton" @click="confirmEmails(), rng()">CONFIRM</button>
+            </div>
+        </form>
     </div>
 </template>
 
 <script>
+import{ init } from 'emailjs-com';
+init("user_9ldq54a73yTROgi8azUq4");
+
 export default ({
     name: 'emailPopup',
     props: [],
@@ -45,7 +50,15 @@ export default ({
         },
         unhover() {
             this.tyText = 'Thank you for your input 👍'
-        }
+        },
+        sendEmail: (e) => {
+            emailjs.sendForm('service_16lidpm', 'template_2h8mbw5', e.target, 'user_9ldq54a73yTROgi8azUq4')
+                .then((result) => {
+                    console.log('SUCCESS!', result.status, result.text);
+                }, (error) => {
+                    console.log('FAILED...', error);
+                });
+            }
     }
 })
 </script>
