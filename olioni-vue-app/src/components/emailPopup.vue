@@ -1,29 +1,37 @@
 <template>
     <div class="container" :style="{backgroundColor: bgClr}">
-        <form @submit.prevent="submitEmail()">
             <div v-if="confirmed" class="tyWrap">
                 <h2 class="tyText" @mouseover="hover()" @mouseout="unhover()"> {{ tyText }} </h2>
             </div>
-            <div v-if="confirming" class="inputsWrap">
-                <div class="inputContainer">
-                    <h2 class="inputHeader">PARENT EMAIL ADRRESS</h2>
-                    <input>
+            <form class="contact-form" @submit.prevent="sendEmail()">
+                <div v-if="confirming" class="inputsWrap">
+                    <div class="inputContainer">
+                        <h2 class="inputHeader">PARENT EMAIL ADRRESS</h2>
+                        <input type="email" v-model="emailBody.parent_name">
+                    </div>
+                    <div class="inputContainer">
+                        <h2 class="inputHeader">TEACHER EMAIL ADRRESS</h2>
+                        <input type="email" v-model="emailBody.teacher_name">
+                    </div>
                 </div>
-                <div class="inputContainer">
-                    <h2 class="inputHeader">TEACHER EMAIL ADRRESS</h2>
-                    <input>
+                <div v-if="confirming" class="buttonWrap">
+                    <input class="confirmButton" type="submit" value="submit" @click="confirmEmails(), rng()">
                 </div>
-            </div>
-            <div v-if="confirming" class="buttonWrap">
-                <button class="confirmButton" @click="confirmEmails(), rng()">CONFIRM</button>
-            </div>
-        </form>
+            </form>
+              <!-- <form class="contact-form" @submit.prevent="sendEmail">
+                <label>Name</label>
+                <input type="text" name="user_name">
+                <label>Email</label>
+                <input type="email" name="user_email">
+                <label>Message</label>
+                <textarea name="message"></textarea>
+                <input type="submit" value="Send">
+            </form> -->
     </div>
 </template>
 
 <script>
-import{ init } from 'emailjs-com';
-init("user_9ldq54a73yTROgi8azUq4");
+import emailjs  from 'emailjs-com';
 
 export default ({
     name: 'emailPopup',
@@ -34,7 +42,12 @@ export default ({
             confirmed: false,
 
             bgClr: '#7c4ebf',
-            tyText: 'Thank you for your input 👍'
+            tyText: 'Thank you for your input 👍',
+
+            emailBody: {
+                parent_name: '',
+                teacher_name: ''
+            }
         }
     },
     methods: {
@@ -52,8 +65,10 @@ export default ({
             this.tyText = 'Thank you for your input 👍'
         },
         sendEmail: (e) => {
-            emailjs.sendForm('service_16lidpm', 'template_2h8mbw5', e.target, 'user_9ldq54a73yTROgi8azUq4')
+            emailjs.sendForm('service_6y6k81s', 'template_2h8mbw5', this.emailBody, 'user_9ldq54a73yTROgi8azUq4')
                 .then((result) => {
+                    console.log(e)
+                    console.log(e.target)
                     console.log('SUCCESS!', result.status, result.text);
                 }, (error) => {
                     console.log('FAILED...', error);

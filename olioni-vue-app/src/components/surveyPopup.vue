@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'surveyPopup',
   props: [],
   data() {
     return {
@@ -233,6 +233,10 @@ h3 {
     height: 16vh;
     width: 20vw;
     font-size: 17px;
+  }
+
+  .response h3 {
+    font-size: 16px;
   }
 
   .responseWrap {

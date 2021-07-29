@@ -1,11 +1,11 @@
 <template>
   <emailPopup v-if="popup"/>
-  <HelloWorld @showPopup="showPopup" v-if="start" />
+  <surveyPopup @showPopup="showPopup" v-if="start" />
   <startPopup v-if="open" @showApp="showApp"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import surveyPopup from './components/surveyPopup.vue'
 import emailPopup from './components/emailPopup.vue'
 import startPopup from './components/startPopup.vue'
 
@@ -19,7 +19,7 @@ export default {
     }
   },
   components: {
-    HelloWorld,
+    surveyPopup,
     emailPopup,
     startPopup
   },
