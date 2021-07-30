@@ -9,9 +9,10 @@
 
       <div class="responseWrap" v-for="(reply, index) in qResponses" :key="index">
         <div class="responseContainer" v-if="index === qIndex" :id="index">
-          <div class="response" :key="index" v-for="(items, index) in reply" :id="index" @click="highlightRespo(index, reply)">
-            <h3 class="emoji">{{ qEmoji[qIndex][index] }}</h3>
-            <h3>{{ items }}</h3>
+          <div class="response" @click="highlightRespo(index, reply)" :key="index" v-for="(items, index) in reply" :id="index">
+            <input class="responseInput" id="checkbox" type="checkbox">
+            <h3 class="emoji responseContent">{{ qEmoji[qIndex][index] }}</h3>
+            <h3 class="responseContent">{{ items }}</h3>
           </div>
         </div>
       </div>
@@ -36,7 +37,7 @@ export default {
       qResponses: {q1: ['Pushed', 'Hit', 'Kicked', 'Took Something', 'Bad/Nasty Words', 'Spat', 'Ignored', 'Upset Someone', 'Ran Away', 'Broke', 'Scratched', 'Made a Mess'], q2:['Angry', 'Go Away', 'Frustrated', "Don't Like/Don't Want To", 'Confused', 'Want To Play', 'Worried', 'Want To Go Home', 'Stop', 'Need Help', 'Not Fair'], q3: ['Student/Child', 'Teacher', 'School Helper', 'Teacher Aide', 'Whole Class', 'Grandparents', 'Bus Driver', 'Mum/Dad', 'Principal/DP'], q4: ['Hurt Head/Face', 'Hurt Arm', 'Hurt Leg', 'Broke Something', 'Made a Mess', 'Hurt Ears', 'Made Someone Scared', 'Made Someone Cry', 'Made Someone Embarassed', 'Made Someone Worried', "Hurt Someone's Feelings", 'Made Someone Sad'], q5: ['Give/Give Back', 'Say Something Nice', 'Check If Ok', 'Fix', 'Offer To', 'Help', 'Clean Up', 'Say I Will',]},
       qIndex: 'q1',
       qEmoji: {q1: ['✋', '🤛', '🦵', '🐱‍👤', '🤬', '💧', '🤐', '😠', '🏃‍♂️', '👋', '🤕', '🗑'], q2: ['😡', '🚶‍♂️', '😣', '🙄', '😟', '😢', '😧', '🙁', '🛑', '🙋‍♂️', '😔'], q3: ['👦', '👩‍🏫', '👨‍💼', '🙍‍♀️', '👥', '👴', '🚌', '👪', '👨‍💼'], q4: ['🤕', '💪', '🦵', '👋', '🗑', '👂', '😰', '😭', '😖', '😞', '😟', '😢'], q5: ['🤲', '🗨', '🤔', '🛠', '🤗', '👏', '💬', '🙏']},
-      selectedResponses: [],
+      selectedResponses: {},
 
       qInt: 1,
 
@@ -56,6 +57,7 @@ export default {
     },
     displayEmailPopup() {
       this.$emit('showPopup')
+      this.$emit('responses', this.selectedResponses)
     },
     nextQuestion() {
       this.qInt++
@@ -74,8 +76,10 @@ export default {
 
     },
     highlightRespo(id, reply) {
-      document.getElementById(id).style = "background-color: #02d614; color: white;"
-      this.selectedResponses.push(this.qResponses[this.qIndex][id])
+      // document.getElementById(id).style = "background-color: #02d614; color: white;"
+      this.selectedResponses[this.qIndex] = reply
+      
+      .push(this.qResponses[this.qIndex][id])
       console.log(this.selectedResponses)
     },
   },
@@ -174,7 +178,7 @@ h3 {
   background-color: white;
   
   width: 15vw;
-  height: 25vh;
+  height: 21vh;
 
   border-radius: 10px;
 
@@ -226,6 +230,21 @@ h3 {
 .emoji {
   font-size: 30px;
   transition: 0.3s;
+}
+
+.responseInput {
+  width: 100%;
+  height: 100vh;
+  border-radius: inherit;
+  border: none;
+}
+
+#checkbox:checked {
+  background-color: green;
+}
+
+.responseContent {
+  position: absolute;
 }
 
 @media only screen and (max-width: 600px) {

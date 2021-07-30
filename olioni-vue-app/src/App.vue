@@ -1,6 +1,6 @@
 <template>
-  <emailPopup v-if="popup"/>
-  <surveyPopup @showPopup="showPopup" v-if="start" />
+  <emailPopup v-if="popup" :responsesObj="responsesObj"/>
+  <surveyPopup @showPopup="showPopup" v-if="start" @responses="pushObj"/>
   <startPopup v-if="open" @showApp="showApp"/>
 </template>
 
@@ -11,11 +11,14 @@ import startPopup from './components/startPopup.vue'
 
 export default {
   name: 'App',
+  props: ['responses'],
   data() {
     return {
       popup: false,
       start: false,
-      open: true
+      open: true,
+
+      responsesObj: {}
     }
   },
   components: {
@@ -27,10 +30,15 @@ export default {
     showPopup() {
       this.popup = true
       this.start = false
+      // console.log(responses)
     },
     showApp() {
       this.open = false
       this.start = true
+    },
+    pushObj(e) {
+      console.log(e)
+      this.responsesObj = e
     }
   }
 }
