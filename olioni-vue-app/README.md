@@ -31,3 +31,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 * once app fully completed build the app (npm run build) this will but completed app in /dist folder
 * publish /dist files onto gh-pages (GitHub Pages) (eg: https://gist.github.com/cobyism/4730490)
 
+### TODOS (31 JULY)
+
+* Make new Repo
+* Make app from folder IncidentApp
+* Push from there
+* follow last step on top todos
