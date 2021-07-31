@@ -3,19 +3,19 @@
             <div v-if="confirmed" class="tyWrap">
                 <h2 class="tyText" @mouseover="hover()" @mouseout="unhover()"> {{ tyText }} </h2>
             </div>
-            <form class="contact-form" @submit.prevent="sendEmail()">
+            <form class="contact-form">
                 <div v-if="confirming" class="inputsWrap">
                     <div class="inputContainer">
-                        <h2 class="inputHeader">PARENT EMAIL ADRRESS</h2>
+                        <h2 class="inputHeader">PARENT NAME</h2>
                         <input type="email" v-model="emailBody.parent_name">
                     </div>
                     <div class="inputContainer">
-                        <h2 class="inputHeader">TEACHER EMAIL ADRRESS</h2>
-                        <input type="email" v-model="emailBody.teacher_name">
+                        <h2 class="inputHeader">PARENT EMAIL ADRRESS</h2>
+                        <input type="email" v-model="emailBody.parent_email">
                     </div>
                 </div>
                 <div v-if="confirming" class="buttonWrap">
-                    <input class="confirmButton" type="submit" value="submit" @click="confirmEmails(), rng()">
+                    <input class="confirmButton" type="submit" value="submit" @click="confirmEmails(), rng(), sendEmail()" :style="{textTransform: toUpperCase}">
                 </div>
             </form>
               <!-- <form class="contact-form" @submit.prevent="sendEmail">
@@ -35,7 +35,7 @@ import emailjs  from 'emailjs-com';
 
 export default ({
     name: 'emailPopup',
-    props: [],
+    props: ['responsesFromApp'],
     data() {
         return {
             confirming: true,
@@ -46,8 +46,12 @@ export default ({
 
             emailBody: {
                 parent_name: '',
-                teacher_name: ''
-            }
+                parent_email: '',
+
+                response: this.responsesFromApp
+            },
+
+            toUpperCase: 'uppercase'
         }
     },
     methods: {
@@ -64,11 +68,10 @@ export default ({
         unhover() {
             this.tyText = 'Thank you for your input 👍'
         },
-        sendEmail: (e) => {
-            emailjs.sendForm('service_6y6k81s', 'template_2h8mbw5', this.emailBody, 'user_9ldq54a73yTROgi8azUq4')
+        sendEmail() {
+            console.log('sending email')
+            emailjs.send('service_6y6k81s', 'template_2h8mbw5', this.emailBody, 'user_9ldq54a73yTROgi8azUq4')
                 .then((result) => {
-                    console.log(e)
-                    console.log(e.target)
                     console.log('SUCCESS!', result.status, result.text);
                 }, (error) => {
                     console.log('FAILED...', error);

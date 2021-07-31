@@ -1,6 +1,6 @@
 <template>
-  <emailPopup v-if="popup"/>
-  <surveyPopup @showPopup="showPopup" v-if="start" />
+  <emailPopup v-if="popup" :responsesFromApp="responsesFromApp"/>
+  <surveyPopup @showPopup="showPopup" v-if="start" @responses="responsesRecieved"/>
   <startPopup v-if="open" @showApp="showApp"/>
 </template>
 
@@ -11,11 +11,14 @@ import startPopup from './components/startPopup.vue'
 
 export default {
   name: 'App',
+  props: [],
   data() {
     return {
       popup: false,
       start: false,
-      open: true
+      open: true,
+
+      responsesFromApp: null
     }
   },
   components: {
@@ -31,6 +34,11 @@ export default {
     showApp() {
       this.open = false
       this.start = true
+    },
+    responsesRecieved(responses) {
+      console.log('emit worked')
+      console.log(responses)
+      this.responsesFromApp = responses
     }
   }
 }
