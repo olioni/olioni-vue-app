@@ -44,6 +44,8 @@ export default ({
             bgClr: '#7c4ebf',
             tyText: 'Thank you for your input 👍',
 
+            upperCase: 'uppercase',
+
             emailBody: {
                 parent_name: '',
                 parent_email: '',

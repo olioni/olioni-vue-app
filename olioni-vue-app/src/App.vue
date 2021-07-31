@@ -30,6 +30,7 @@ export default {
     showPopup() {
       this.popup = true
       this.start = false
+      // console.log(responses)
     },
     showApp() {
       this.open = false
