@@ -6,13 +6,33 @@
             <form class="contact-form">
                 <div v-if="confirming" class="inputsWrap">
                     <div class="inputContainer">
+                        <h2 class="inputHeader">STUDENT NAME</h2>
+                        <input type="email" v-model="emailBody.student_name">
+                    </div>
+
+                    <div class="inputContainer splitContainer">
+                        <div>
                         <h2 class="inputHeader">PARENT NAME</h2>
                         <input type="email" v-model="emailBody.parent_name">
-                    </div>
-                    <div class="inputContainer">
-                        <h2 class="inputHeader">PARENT EMAIL ADRRESS</h2>
+                        </div>
+                        <div>
+                        <h2 class="inputHeader">PARENT EMAIL ADDRESS</h2>
                         <input type="email" v-model="emailBody.parent_email">
+                        </div>
                     </div>
+                    
+                    <div class="inputContainer splitContainer">
+                        <div>
+                        <h2 class="inputHeader">TEACHER NAME</h2>
+                        <input type="email" v-model="emailBody.teacher_name">
+                        </div>
+                        <div>
+                        <h2 class="inputHeader">TEACHER EMAIL ADDRESS</h2>
+                        <input type="email" v-model="emailBody.teacher_email">
+                        </div>
+                    </div>
+
+
                 </div>
                 <div v-if="confirming" class="buttonWrap">
                     <input class="confirmButton" type="submit" value="submit" @click="confirmEmails(), rng(), sendEmail()" :style="{textTransform: toUpperCase}">
@@ -49,6 +69,10 @@ export default ({
             emailBody: {
                 parent_name: '',
                 parent_email: '',
+                teacher_name: '',
+                teacher_email: '',
+
+                student_name: '',
 
                 response: this.responsesFromApp
             },
@@ -72,9 +96,16 @@ export default ({
         },
         sendEmail() {
             console.log('sending email')
+            console.log(this.emailBody)
             emailjs.send('service_6y6k81s', 'template_2h8mbw5', this.emailBody, 'user_9ldq54a73yTROgi8azUq4')
                 .then((result) => {
-                    console.log('SUCCESS!', result.status, result.text);
+                    console.log('SUCCESS PARENT!', result.status, result.text);
+                }, (error) => {
+                    console.log('FAILED...', error);
+                });
+            emailjs.send('service_6y6k81s', 'template_5tnfcgk', this.emailBody, 'user_9ldq54a73yTROgi8azUq4')
+                .then((result) => {
+                    console.log('SUCCESS! TEACHER', result.status, result.text);
                 }, (error) => {
                     console.log('FAILED...', error);
                 });
@@ -108,13 +139,29 @@ export default ({
 
 .inputsWrap {
     width: 100vw;
-    height: 50vh;
+    height: 70vh;
 
     transition: 0.6s;
+
+    /* border: red 1px solid; */
 }
 
 .inputContainer {
-    height: 20vh;
+    height: 13vh;
+}
+
+.splitContainer {
+    height: 24vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    /* border: yellow 1px solid; */
+}
+
+.splitContainer input {
+    width: 40vw;
+    margin: 20px;
 }
 
 .inputHeader {
